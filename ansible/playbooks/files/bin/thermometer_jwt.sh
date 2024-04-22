@@ -7,6 +7,7 @@ while [ $# -ne 0 ]; do
 done
 
 JWT_KEY=${JWT_KEY:-"../conf/jwt.pem"}
+JWT_SUB=${JWT_SUB:-"Thermometer jwt"}
 die() {
   printf "ERROR: %s" "$1"
   exit 1
@@ -35,7 +36,7 @@ header="{\"alg\": \"RS256\", \"typ\": \"JWT\"}"
 EXP=$(date +%s -d +1hour)
 IAT=$(date +%s)
 NBF=$(date +%s -d -1second)
-payload=$(printf "{\"exp\": %s, \"iat\": %s, \"nbf\": %s, \"sub\": \"jwt.sh\"}" "$EXP" "$IAT" "$NBF")
+payload=$(printf "{\"exp\": %s, \"iat\": %s, \"nbf\": %s, \"sub\": \"%s\"}" "$EXP" "$IAT" "$NBF" "$JWT_SUB")
 
 header=$(encode "$header")
 payload=$(encode "$payload")
