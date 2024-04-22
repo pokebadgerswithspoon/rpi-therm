@@ -25,8 +25,8 @@
     apt: name={{ item }} update_cache=yes state=latest
     with_items:
       - openssl
-      - jq
       - base64
+      - curl
   - name: Generate JWT private key
     community.crypto.openssl_privatekey:
       path: "{{ dir }}/conf/jwt.pem"
