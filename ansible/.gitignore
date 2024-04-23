@@ -27,3 +27,6 @@ roles/**
 *.zip
 *.gzip
 *.tgz
+
+# Exclude certs
+*.pem
