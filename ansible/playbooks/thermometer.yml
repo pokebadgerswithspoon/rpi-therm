@@ -37,13 +37,13 @@
   - name: Add script
     ansible.builtin.copy:
       src: "bin/thermometer_{{ item }}.sh"
-      dest: "{{ dir }}/bin/{{ item }}"
+      dest: "{{ dir }}/bin/"
       mode: "0755"
       force: true
     loop:
-      - json
-      - post
-      - jwt
+      - thermometer_json.sh
+      - thermometer_post.sh
+      - thermometer_jwt.sh
   - name: Crontab job
     ansible.builtin.cron:
       name: "Post temperature json"
