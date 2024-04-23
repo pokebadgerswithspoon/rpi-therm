@@ -48,4 +48,4 @@
     ansible.builtin.cron:
       name: "Post temperature json"
       minute: "*/1"
-      job: "{{ dir }}/bin/post > /dev/null"
+      job: "{{ dir }}/bin/thermometer_post.sh > /dev/null"

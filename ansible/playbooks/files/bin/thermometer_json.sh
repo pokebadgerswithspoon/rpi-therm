@@ -1,10 +1,13 @@
 #!/bin/sh
 DEV_DIR=${DEV_DIR:-/sys/bus/w1/devices}
-
 die() {
   printf "{ error: \"%s\"}" "$1"
   exit 1
 }
+
+[ -x "$(command -v dirname)" ] || die "dirname is not present"
+
+BIN_DIR=$(dirname "$0")
 
 THERMOMETER_DIR=$(find ${DEV_DIR} -type d -name "28-*" -print 2>/dev/null | head -n 1) 
 THERMOMETER_FILE="${THERMOMETER_DIR}/w1-slave"

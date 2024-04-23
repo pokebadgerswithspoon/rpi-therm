@@ -1,17 +1,19 @@
 #!/bin/sh
-while [ $# -ne 0 ]; do
-	case $1 in
 
-    esac;
-	shift;
-done
-
-JWT_KEY=${JWT_KEY:-"../conf/jwt.pem"}
-JWT_SUB=${JWT_SUB:-"Thermometer jwt"}
 die() {
   printf "ERROR: %s" "$1"
   exit 1
 }
+
+[ -x "$(command -v openssl)" ] || die "openssl is not present"
+[ -x "$(command -v date)" ] || die "date command is not present"
+[ -x "$(command -v dirname)" ] || die "dirname is not present"
+[ -x "$(command -v base64)" ] || die "base64 is not present"
+[ -x "$(command -v tr)" ] || die "tr is not present"
+
+BIN_DIR=$(dirname "$0")
+JWT_KEY=${JWT_KEY:-"${BIN_DIR}/../conf/jwt.pem"}
+JWT_SUB=${JWT_SUB:-"Thermometer jwt"}
 encode() 
 {
     printf "%s" "$1" | tr -d '\n' | base64 -w 0 | tr -d '=' | tr '/+' '_-' | tr -d '\n'
@@ -22,11 +24,6 @@ sign()
 }
 
 [ -f "${JWT_KEY}" ] || die "JWT key not found (${JWT_KEY})"
-[ -x "$(command -v openssl)" ] || die "openssl is not present"
-[ -x "$(command -v date)" ] || die "date command is not present"
-# [ -x "$(command -v jq)" ] || die "jq is not present"
-[ -x "$(command -v base64)" ] || die "base64 is not present"
-[ -x "$(command -v tr)" ] || die "tr is not present"
 
 # header=$(jq -c -r . << EOF
 #   "{\"alg\": \"RS256\", \"typ\": \"JWT\"}"
