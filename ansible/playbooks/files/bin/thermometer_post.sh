@@ -10,8 +10,8 @@ JWT=${JWT:-$(./thermometer_jwt.sh)}
 URL=${URL:-"https://raimond.icantfeelmylegs.com/thermometer/post"}
 JSON=$(./thermometer_json.sh)
 
-curl -X POST \
- -d "${JSON}" \
+echo curl -X POST \
+ -d \'"${JSON}"\' \
  -H 'Accept: application/json' \
  -H "Authorization: Bearer ${JWT}" \
  "${URL}"
