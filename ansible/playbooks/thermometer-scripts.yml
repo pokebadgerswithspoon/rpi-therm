@@ -15,6 +15,10 @@
       - thermometer_json.sh
       - thermometer_post.sh
       - thermometer_jwt.sh
+      - thermometer_cron.sh
+      - cached.sh
+      - cached_json.sh
+      - cached_jwt.sh
   - name: "Crontab job for {{ ansible_user }}"
     ansible.builtin.cron:
       name: "Post temperature json"
