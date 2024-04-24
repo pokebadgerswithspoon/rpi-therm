@@ -1,5 +1,4 @@
 #!/bin/sh
-DEV_DIR=${DEV_DIR:-/sys/bus/w1/devices}
 die() {
   printf "{ error: \"%s\"}" "$1"
   exit 1
@@ -7,8 +6,8 @@ die() {
 
 [ -x "$(command -v dirname)" ] || die "dirname is not present"
 
-THERMOMETER_DIR=$(find ${DEV_DIR} -type d -name "28-*" -print 2>/dev/null | head -n 1) 
-THERMOMETER_FILE="${THERMOMETER_DIR}/w1-slave"
+THERMOMETER_DIR=$(find "/sys/bus/w1/devices" -name "28-*" -print 2>/dev/null | head -n 1) 
+THERMOMETER_FILE="${THERMOMETER_DIR}/w1_slave"
 [ -d "${THERMOMETER_DIR}" ] || die "Thermometer device not found"
 [ -f "${THERMOMETER_FILE}" ] || die "Thermometer file not found"
 
