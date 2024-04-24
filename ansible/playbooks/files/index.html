@@ -24,17 +24,18 @@
         }
     </style>
     <script lang="javascript">
+
         function load() {
             status("...", "Loading");
             sendRequest();
             setInterval(sendRequest, 5000);
         }
         function onLoaded(data) {
-            const t = data.t;
             const error = data.error;
             if (error) {
                 status("???", error)
             } else {
+                const t = new Number(data.t).toFixed(1)
                 status(t + "°C", "")
             }
         }
