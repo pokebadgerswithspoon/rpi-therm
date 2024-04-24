@@ -30,12 +30,17 @@
             sendRequest();
             setInterval(sendRequest, 5000);
         }
-        function onLoaded(data) {
+            function onLoaded(data, s) {
+                if (!data) {
+                    status("?!", "No data");
+                    return
+                }
             const error = data.error;
-            if (error) {
+            const dataT = data.t
+            if (error || !dataT) {
                 status("???", error)
             } else {
-                const t = new Number(data.t).toFixed(1)
+                const t = (dataT / 1000).toFixed(1)
                 status(t + "°C", "")
             }
         }
@@ -44,8 +49,12 @@
         }
         function sendRequest() {
             const request = new XMLHttpRequest();
-            request.onload = onLoaded;
             request.onerror = onError;
+            request.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    onLoaded(request.response);
+                }
+            }
             request.responseType = "json";
             request.open("GET", "./cgi-bin/index.cgi", true);
             request.send();
