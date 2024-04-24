@@ -9,7 +9,7 @@ die() {
 [ -x "$(command -v curl)" ] || die "curl is not present"
 
 JWT=${JWT:-$("${BIN_DIR}/cached_jwt.sh")}
-URL=${URL:-"https://raimond.icantfeelmylegs.com/thermometer/post"}
+URL=${URL:-"https://raimond.icantfeelmylegs.com/thermometer"}
 JSON=$("${BIN_DIR}/cached_json.sh")
 
 curl -X POST \
