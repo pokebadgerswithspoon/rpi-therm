@@ -1,6 +1,6 @@
 #!/bin/sh
 die() {
-  printf "{ error: \"%s\"}" "$1"
+  printf "{ \"error\": \"%s\"}" "$1"
   exit 1
 }
 
@@ -15,4 +15,4 @@ TEMPERATURE=$(< "$THERMOMETER_FILE" grep -Po '(?<=t=)([0-9]+)')
 if [ "${TEMPERATURE}x" = "x" ]; then
     die "Temperature is unreadable"
 fi
-printf "{ t: %s }" "$TEMPERATURE"
+printf "{ \"t\": %s }" "$TEMPERATURE"
