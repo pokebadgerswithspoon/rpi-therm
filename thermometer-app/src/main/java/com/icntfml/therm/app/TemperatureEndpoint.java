@@ -1,33 +1,40 @@
 package com.icntfml.therm.app;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import org.eclipse.microprofile.config.inject.ConfigProperty;
+
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
-import org.eclipse.microprofile.config.inject.ConfigProperty;
-
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.NoSuchFileException;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Path("")
 public class TemperatureEndpoint {
 
-    @ConfigProperty(name = "cache")
+    @ConfigProperty(name = "cache.file")
     File cache;
+    @ConfigProperty(name = "cache.ttl")
+    long cacheTtl = 1200;
 
     @GET
     @Path("cgi-bin/index.cgi")
     @Produces({MediaType.APPLICATION_JSON})
     public String getTemp() {
         try {
+            if (!cache.exists()) {
+                return error("File not found (%s)".formatted(cache));
+            }
+            long age = System.currentTimeMillis() / 1000 - cache.lastModified();
+            if (age > cacheTtl) {
+                return error("Stale");
+            }
             return Files.readString(cache.toPath());
-        } catch (NoSuchFileException e) {
-            return error("File not found (%s)".formatted(cache));
         } catch (IOException e) {
             return error(e.getMessage());
         }
