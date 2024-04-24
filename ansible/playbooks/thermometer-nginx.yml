@@ -8,9 +8,7 @@
     - name: Install packages
       ansible.builtin.apt:
         state: latest # noqa package-latest
-        upgrade: dist
-        autoremove: true
-        update_cache: yes
+        update_cache: true
         name: "{{ item }}"
       with_items:
         - nginx

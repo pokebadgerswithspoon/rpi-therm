@@ -37,6 +37,14 @@
       community.crypto.openssl_publickey:
         path: "{{ dir }}/conf/jwt.pem.pub"
         privatekey_path: "{{ dir }}/conf/jwt.pem"
+    - name: Extract key
+      ansible.builtin.fetch:
+        src: "{{ dir }}/conf/{{ item }}"
+        dest: "./conf/{{ item }}-{{ inventory_hostname }}"
+        flat: yes
+      loop:
+        - jwt.pem.pub
+        - jwt.pem
     - name: "Make JWT keys readable by {{ ansible_user }}"
       ansible.builtin.file:
         path: "{{ dir }}/conf/{{ item }}"
