@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Thermometer</title>
+    <style>
+        html {
+            font-size: 62.5%;
+        }
+
+        body {
+            font-family: sans-serif;
+            background-color: midnightblue;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        div {
+            text-align: center;
+            font-size: 8rem;
+        }
+    </style>
+    <script lang="javascript">
+
+        function load() {
+            status("...", "Loading");
+            sendRequest();
+            setInterval(sendRequest, 2000);
+        }
+            function onLoaded(data, s) {
+                if (!data) {
+                    status("?!", "No data");
+                    return
+                }
+            const error = data.error;
+            const dataT = data.t
+            if (error || !dataT) {
+                status("???", error)
+            } else {
+                const t = (dataT / 1000).toFixed(1)
+                status(t + "&#8451;", "")
+            }
+        }
+        function onError(e, b) {
+            status("?!", "Error getting data from thermometer server")
+        }
+        function sendRequest() {
+            const request = new XMLHttpRequest();
+            request.onerror = onError;
+            request.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    onLoaded(request.response);
+                }
+            }
+            request.responseType = "json";
+            request.open("GET", "./cgi-bin/index.cgi", true);
+            request.send();
+        }
+        function status(msg, description) {
+            document.getElementById("message").innerHTML = msg;
+            if (description) {
+                console.log(msg, description)
+            }
+        }
+    </script>
+</head>
+
+<body onload="load()">
+    <div id="message">...</div>
+</body>
+
+</html>

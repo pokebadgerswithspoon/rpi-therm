@@ -1,0 +1,51 @@
+---
+- name: Thermometer local http server
+  hosts: all
+  become: true
+  vars:
+    dir: /opt/therm
+  tasks:
+    - name: Install packages
+      ansible.builtin.apt:
+        state: latest # noqa package-latest
+        update_cache: true
+        name: "{{ item }}"
+      with_items:
+        - nginx
+        - fcgiwrap
+    - name: Configure fcgiwrap.conf
+      ansible.builtin.copy:
+        src: "nginx/fcgiwrap.conf"
+        dest: "/etc/nginx/fcgiwrap.conf"
+        remote_src: false
+        backup: true
+        mode: "0644"
+    - name: Add fcgiwrap to default site
+      ansible.builtin.lineinfile:
+        path: /etc/nginx/sites-enabled/default
+        regexp: '^\s+include.*fcgiwrap.conf;'
+        insertafter: 'default_server'
+        line: '        include /etc/nginx/fcgiwrap.conf;'
+    - name: "Start/Enable service"
+      ansible.builtin.systemd_service:
+        state: started
+        name: "{{ item }}"
+        enabled: true
+      loop:
+        - nginx
+        - fcgiwrap
+    - name: Creates directory
+      ansible.builtin.file:
+        path: "/var/www/cgi-bin"
+        state: directory
+        mode: "0755"
+    - name: Add cgi script
+      ansible.builtin.copy:
+        src: "nginx/cgi-bin/index.cgi"
+        dest: "/var/www/cgi-bin/index.cgi"
+        mode: "0755"
+    - name: Add html
+      ansible.builtin.copy:
+        src: "nginx/index.html"
+        dest: "/var/www/html/index.html"
+        mode: "0644"

@@ -1,0 +1,56 @@
+---
+- name: DS18B20 support
+  hosts: all
+  become: true
+  vars:
+    dir: /opt/therm
+  tasks:
+    - name: Kernel module
+      community.general.modprobe:
+        name: "{{ item }}"
+        state: present
+        persistent: present
+      loop:
+        - w1-gpio
+        - w1-therm
+    - name: Creates directory
+      ansible.builtin.file:
+        path: "{{ dir }}/{{ item }}"
+        state: directory
+        mode: "0755"
+      loop:
+        - bin
+        - conf
+    - name: Install packages
+      ansible.builtin.apt:
+        name: "{{ item }}"
+        update_cache: true
+        state: latest # noqa package-latest
+      with_items:
+        - openssl
+        - coreutils
+        - curl
+    - name: Generate JWT private key
+      community.crypto.openssl_privatekey:
+        path: "{{ dir }}/conf/jwt.pem"
+    - name: Generate JWT public key
+      community.crypto.openssl_publickey:
+        path: "{{ dir }}/conf/jwt.pem.pub"
+        privatekey_path: "{{ dir }}/conf/jwt.pem"
+    - name: Extract key
+      ansible.builtin.fetch:
+        src: "{{ dir }}/conf/{{ item }}"
+        dest: "./conf/{{ item }}-{{ inventory_hostname }}"
+        flat: true
+      loop:
+        - jwt.pem.pub
+        - jwt.pem
+    - name: "Make JWT keys readable by {{ ansible_user }}"
+      ansible.builtin.file:
+        path: "{{ dir }}/conf/{{ item }}"
+        owner: "{{ ansible_user }}"
+        group: "root"
+        mode: '0640'
+      loop:
+        - "jwt.pem"
+        - "jwt.pem.pub"
