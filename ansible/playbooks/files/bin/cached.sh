@@ -1,5 +1,5 @@
 #!/bin/sh
-
+## Primitive cache for long running scripts
 CMD=$*
 TMPDIR=${TMPDIR:-"/tmp"}
 CACHE_NAME=${CACHE_NAME:-cached}

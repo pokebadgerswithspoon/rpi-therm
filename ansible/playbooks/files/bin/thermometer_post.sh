@@ -8,9 +8,9 @@ die() {
 }
 [ -x "$(command -v curl)" ] || die "curl is not present"
 
-JWT=${JWT:-$("${BIN_DIR}/thermometer_jwt.sh")}
+JWT=${JWT:-$("${BIN_DIR}/cached_jwt.sh")}
 URL=${URL:-"https://raimond.icantfeelmylegs.com/thermometer/post"}
-JSON=$("${BIN_DIR}/thermometer_json.sh")
+JSON=$("${BIN_DIR}/cached_json.sh")
 
 echo curl -X POST \
  -d \'"${JSON}"\' \
