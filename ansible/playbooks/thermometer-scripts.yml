@@ -5,23 +5,23 @@
   vars:
     dir: /opt/therm
   tasks:
-  - name: Add script
-    ansible.builtin.copy:
-      src: "bin/{{ item }}"
-      dest: "{{ dir }}/bin/"
-      mode: "0755"
-      force: true
-    loop:
-      - thermometer_json.sh
-      - thermometer_post.sh
-      - thermometer_jwt.sh
-      - thermometer_cron.sh
-      - cached.sh
-      - cached_json.sh
-      - cached_jwt.sh
-  - name: "Crontab job for {{ ansible_user }}"
-    ansible.builtin.cron:
-      name: "Post temperature json"
-      minute: "*/1"
-      user: "{{ ansible_user }}"
-      job: "{{ dir }}/bin/thermometer_cron.sh > /dev/null"
+    - name: Add script
+      ansible.builtin.copy:
+        src: "bin/{{ item }}"
+        dest: "{{ dir }}/bin/"
+        mode: "0755"
+        force: true
+      loop:
+        - thermometer_json.sh
+        - thermometer_post.sh
+        - thermometer_jwt.sh
+        - thermometer_cron.sh
+        - cached.sh
+        - cached_json.sh
+        - cached_jwt.sh
+    - name: "Crontab job for {{ ansible_user }}"
+      ansible.builtin.cron:
+        name: "Post temperature json"
+        minute: "*/1"
+        user: "{{ ansible_user }}"
+        job: "{{ dir }}/bin/thermometer_cron.sh > /dev/null"
