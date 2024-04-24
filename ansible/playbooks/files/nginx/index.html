@@ -28,7 +28,7 @@
         function load() {
             status("...", "Loading");
             sendRequest();
-            setInterval(sendRequest, 5000);
+            setInterval(sendRequest, 2000);
         }
             function onLoaded(data, s) {
                 if (!data) {
@@ -41,7 +41,7 @@
                 status("???", error)
             } else {
                 const t = (dataT / 1000).toFixed(1)
-                status(t + "°C", "")
+                status(t + "&#8451;", "")
             }
         }
         function onError(e, b) {

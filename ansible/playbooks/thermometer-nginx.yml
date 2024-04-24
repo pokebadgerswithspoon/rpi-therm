@@ -5,11 +5,11 @@
   vars:
     dir: /opt/therm
   tasks:
-  # - name: Install packages
-  #   apt: name={{ item }} update_cache=yes state=latest
-  #   with_items:
-  #     - nginx
-  #     - fcgiwrap
+  - name: Install packages
+    apt: name={{ item }} update_cache=yes state=latest
+    with_items:
+      - nginx
+      - fcgiwrap
   - name: Configure fcgiwrap.conf
     ansible.builtin.copy:
       src: "nginx/fcgiwrap.conf"
