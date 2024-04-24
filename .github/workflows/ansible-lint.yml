@@ -1,13 +1,13 @@
 name: ansible-lint
 on:
   pull_request:
-    branches: 
-        - master
-        - release/*
-  workflow_dispatch: 
+    branches:
+      - master
+      - release/*
+  workflow_dispatch:
 defaults:
   run:
-    working-directory: ./ansible 
+    working-directory: ./ansible
 jobs:
   build:
     name: Ansible Lint # Naming the build is important to use it as a status check
