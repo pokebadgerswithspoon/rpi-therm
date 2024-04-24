@@ -41,7 +41,7 @@
       ansible.builtin.fetch:
         src: "{{ dir }}/conf/{{ item }}"
         dest: "./conf/{{ item }}-{{ inventory_hostname }}"
-        flat: yes
+        flat: true
       loop:
         - jwt.pem.pub
         - jwt.pem
