@@ -4,11 +4,10 @@
   become: true
   vars:
     dir: /opt/therm
-    comment: "Raimondi juures"
   tasks:
   - name: Kernel module 
     community.general.modprobe:
-      name: {{ item }}
+      name: "{{ item }}"
       state: present
       persistent: present 
     loop:
@@ -16,16 +15,16 @@
       - w1-therm
   - name: Creates directory
     ansible.builtin.file:
-      path: {{ dir }}/{{ item }}
+      path: "{{ dir }}/{{ item }}"
       state: directory
     loop:
       - bin
       - conf
   - name: Install packages
-    apt: name={{ item }} update_cache=yes state=latest
+    apt: "name={{ item }} update_cache=yes state=latest"
     with_items:
       - openssl
-      - base64
+      - coreutils
       - curl
   - name: Generate JWT private key
     community.crypto.openssl_privatekey:
@@ -34,18 +33,12 @@
     community.crypto.openssl_publickey:
       path: "{{ dir }}/conf/jwt.pem.pub"
       privatekey_path: "{{ dir }}/conf/jwt.pem"
-  - name: Add script
-    ansible.builtin.copy:
-      src: "bin/thermometer_{{ item }}.sh"
-      dest: "{{ dir }}/bin/"
-      mode: "0755"
-      force: true
+  - name: "Make JWT keys readable by {{ ansible_user }}"
+    ansible.builtin.file:
+      path: "{{ dir  }}/conf/{{ item }}"
+      owner: "{{ ansible_user }}"
+      group: "root"
+      mode: '0640'
     loop:
-      - thermometer_json.sh
-      - thermometer_post.sh
-      - thermometer_jwt.sh
-  - name: Crontab job
-    ansible.builtin.cron:
-      name: "Post temperature json"
-      minute: "*/1"
-      job: "{{ dir }}/bin/thermometer_post.sh > /dev/null"
+      - "jwt.pem"
+      - "jwt.pem.pub"
