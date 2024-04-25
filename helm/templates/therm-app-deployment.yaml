@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: therm-app
+  labels:
+    app: therm-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: therm-app
+  template:
+    metadata:
+      labels:
+        app: therm-app
+    spec:
+      containers:
+        - name: therm-app
+          image: ghcr.io/pokebadgerswithspoon/rpi-therm/thermometer-app:{{ .Values.image.tag }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: 8080
+              name: http

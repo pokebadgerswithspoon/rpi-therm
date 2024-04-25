@@ -1,0 +1,7 @@
+# namespace: raimond
+image:
+  tag: 1.0.0-snapshot
+  pullPolicy: IfNotPresent
+jwt:
+  secretName: jwt
+  create: true
