@@ -111,6 +111,13 @@
                 <groupId>com.google.cloud.tools</groupId>
                 <artifactId>jib-maven-plugin</artifactId>
                 <version>3.4.1</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.google.cloud.tools</groupId>
+                        <artifactId>jib-quarkus-extension-maven</artifactId>
+                        <version>0.1.1</version>
+                    </dependency>
+                </dependencies>
                 <configuration>
                     <skip>false</skip>
                     <from>
