@@ -1,6 +1,7 @@
 {
     "recommendations": [
         "redhat.ansible",
-        "wolfmah.ansible-vault-inline"
+        "wolfmah.ansible-vault-inline",
+        "ms-kubernetes-tools.vscode-kubernetes-tools"
     ]
 }

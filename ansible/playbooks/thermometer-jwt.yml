@@ -1,0 +1,14 @@
+---
+- name: Fetch jwt public key
+  hosts: all
+  become: true
+  vars:
+    dir: /opt/therm
+  tasks:
+    - name: Extract key for helm
+      ansible.builtin.fetch:
+        src: "{{ dir }}/conf/{{ item }}"
+        dest: "../../helm/{{ item }}"
+        flat: true
+      loop:
+        - jwt.pem.pub
