@@ -30,7 +30,7 @@ public class TemperatureEndpoint {
             if (!cache.exists()) {
                 return error("File not found (%s)".formatted(cache));
             }
-            long age = System.currentTimeMillis() / 1000 - cache.lastModified();
+            long age = ( System.currentTimeMillis() - cache.lastModified())/1000;
             if (age > cacheTtl) {
                 return error("Stale");
             }
@@ -41,7 +41,7 @@ public class TemperatureEndpoint {
     }
 
     @POST
-    @Path("temperature/post")
+    @Path("temperature")
     public String postTemp(String payload) {
         try {
             Files.writeString(cache.toPath(), payload);
