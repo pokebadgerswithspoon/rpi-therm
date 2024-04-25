@@ -1,4 +1,4 @@
-package com.icntfml.therm.app;
+package com.icntfml.therm.app.rest;
 
 import java.io.File;
 import java.io.IOException;
