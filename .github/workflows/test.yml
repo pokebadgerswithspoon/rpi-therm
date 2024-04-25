@@ -17,3 +17,8 @@ jobs:
           cache: 'maven'
       - name: Test with Maven
         run: ./thermometer-app/mvnw -f ./thermometer-app/pom.xml -B clean test
+      - name: helm-check
+        uses: hopisaurus/helm-check-action@v0.1.1
+        env:
+          CHART_LOCATION: ./helm
+          CHART_VALUES: ./helm/values.yaml
