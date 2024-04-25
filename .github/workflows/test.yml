@@ -1,5 +1,5 @@
 name: Run tests
-on:  
+on:
   pull_request:
     branches:
       - 'master'
@@ -16,4 +16,4 @@ jobs:
           java-version: '17'
           cache: 'maven'
       - name: Test with Maven
-        run:  ./thermometer-app/mvnw -f ./thermometer-app/pom.xml -B clean test
+        run: ./thermometer-app/mvnw -f ./thermometer-app/pom.xml -B clean test

@@ -2,7 +2,7 @@ name: Build containers
 
 on:
   push:
-    branches: [ "master" ]
+    branches: ["master"]
   workflow_dispatch:
 env:
   REGISTRY: ghcr.io
@@ -27,4 +27,3 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build with Maven
         run: ./thermometer-app/mvnw -f ./thermometer-app/pom.xml -B clean package jib:build -DskipTests
-
