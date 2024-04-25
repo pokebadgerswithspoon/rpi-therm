@@ -41,7 +41,7 @@ public class TemperatureEndpoint {
     }
 
     @POST
-    @Path("temperature")
+    @Path("thermometer")
     public String postTemp(String payload) {
         try {
             Files.writeString(cache.toPath(), payload);
