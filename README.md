@@ -1,11 +1,36 @@
 # rpi-therm
-Raspbery PI based Thremometer
+
+Raspbery PI based Thremometer based on DS18B20 chip.
+
+Repository contains:
+- soldering guide, wire pins of raspberry pi to thermometer and resistor
+- a set of scripts to turn raspberry PI into thermometer
+- local web server running the PI to show temperature
+- application for internet to collect metrics and display temeterure on a public web site
+
+See more: [HOWTO](./docs/howto.md)
+
+## Shopping list
+
+- Raspberry PI with wifi, i.e. Raspberry PI Zero W
+- DS18B20 thermometer waterproof implementation
+- Resistor
+
+See more: [shopping list](./docs/shopping-list.md)
+
+## Developement
+
+### Prerequsites
+
+- sh compatible shell, linux machine or gitbash at least
+- ansible
+- IDE like vscode
+- jdk 17
+- helm
+- kubectl
 
 
-## Raw output
 
-```shell
-lauri@raspberrypi:/sys/bus/w1/devices/28-3ce1d4437649 $ cat w1_slave
-66 01 55 05 7f a5 81 66 fa : crc=fa YES
-66 01 55 05 7f a5 81 66 fa t=22375
-```
+## Links
+
+- https://albertherd.com/2019/01/02/connecting-a-ds18b20-thermal-sensor-to-your-raspberry-pi-raspberry-pi-temperature-monitoring-part-1/
