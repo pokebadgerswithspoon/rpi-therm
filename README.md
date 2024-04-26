@@ -2,7 +2,7 @@
 
 Raspbery PI based Thremometer based on DS18B20 chip: 
 - local network web server running on the PI
-- postage to an internet 
+- postage to internet 
 - internet app 
 
 ### Screenshot
