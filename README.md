@@ -1,6 +1,13 @@
 # rpi-therm
 
-Raspbery PI based Thremometer based on DS18B20 chip.
+Raspbery PI based Thremometer based on DS18B20 chip: 
+- local network web server running on the PI
+- postage to an internet 
+- internet app 
+
+### Screenshot
+
+![Demo](./docs/images/demo.jpg)
 
 Repository contains:
 - soldering guide, wire pins of raspberry pi to thermometer and resistor
@@ -29,8 +36,6 @@ See more: [shopping list](./docs/shopping-list.md)
 - helm
 - kubectl
 
-
-
-## Links
+## Acknowledgments
 
 - https://albertherd.com/2019/01/02/connecting-a-ds18b20-thermal-sensor-to-your-raspberry-pi-raspberry-pi-temperature-monitoring-part-1/
