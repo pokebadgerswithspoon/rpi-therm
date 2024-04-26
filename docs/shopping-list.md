@@ -46,4 +46,5 @@ Micro USB power adapter
 ### Case
 
 Official Raspberry Pi Zero Case
+
 ![Official case](./images/pi-zero-case-camera.jpg)

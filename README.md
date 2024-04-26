@@ -15,7 +15,6 @@ Repository contains:
 - local web server running the PI to show temperature
 - application for internet to collect metrics and display temeterure on a public web site
 
-See more: [HOWTO](./docs/howto.md)
 
 ## Shopping list
 
@@ -24,6 +23,11 @@ See more: [HOWTO](./docs/howto.md)
 - Resistor
 
 See more: [shopping list](./docs/shopping-list.md)
+
+## HOWTO
+
+ - [HOWTO](./docs/howto.md)
+ - [ansible](./ansible/README.md)
 
 ## Developement
 
