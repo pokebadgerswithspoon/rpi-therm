@@ -1,0 +1,4 @@
+- [HOWTO](./howto.md)
+- [Shopping list](./shopping-list.md)
+- [Ansible](../ansible/README.md)
+- [helm](../helm/README.md)
