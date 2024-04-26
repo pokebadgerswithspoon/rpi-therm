@@ -41,7 +41,9 @@ Start it, follow instructions.
 
 ## Setup
 
-Setup is done by [Ansible](ansible.md) playbook.
+Setup is done by [Ansible](../ansible/README.md) playbook.
+
+- [ansible](../ansible/README.md)
 
 ## Internet
 
