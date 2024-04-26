@@ -4,6 +4,7 @@
   become: true
   vars:
     dir: /opt/therm
+    gpiopin: 4
   tasks:
     - name: Kernel module
       community.general.modprobe:
@@ -15,10 +16,10 @@
         - w1-therm
     - name: Pin selection for W1 protocol
       ansible.builtin.lineinfile:
-        path: /etc/nginx/sites-enabled/default
-        regexp: '^\s+include.*fcgiwrap.conf;'
-        insertafter: 'default_server'
-        line: '        '
+        path: /boot/firmware/config.txt
+        regexp: "^dtoverlay=w1-gpio,gpiopin={{ gpiopin }}"
+        insertafter: '[all]'
+        line: "dtoverlay=w1-gpio,gpiopin={{ gpiopin }}"
     - name: Creates directory
       ansible.builtin.file:
         path: "{{ dir }}/{{ item }}"
